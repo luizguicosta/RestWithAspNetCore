@@ -10,13 +10,25 @@ namespace RestWithAspNetCore.Controllers
     [ApiController]
     public class CalculatorController : ControllerBase
     {
-        // GET api/values
-        [HttpGet("{firstNumber}/{secondNumber}")]
+        //GET api/calculator/sum/firstNumber/secondNumber
+        [HttpGet("sum/{firstNumber}/{secondNumber}")]
         public IActionResult Sum(string firstNumber, string secondNumber)
         {
             if(IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
                 var result = Convert.ToDecimal(firstNumber) + Convert.ToDecimal(secondNumber);
+                return Ok(result);
+            }
+            return BadRequest("Invalid input");
+        }
+
+        //GET api/calculator/sum/firstNumber/secondNumber
+        [HttpGet("subtraction/{firstNumber}/{secondNumber}")]
+        public IActionResult Subtraction(string firstNumber, string secondNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            {
+                var result = Convert.ToDecimal(firstNumber) - Convert.ToDecimal(secondNumber);
                 return Ok(result);
             }
             return BadRequest("Invalid input");
