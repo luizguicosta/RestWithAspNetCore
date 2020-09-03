@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RestWithAspNetCore.Utils;
 
 namespace RestWithAspNetCore.Controllers
 {
@@ -14,7 +15,7 @@ namespace RestWithAspNetCore.Controllers
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
         public IActionResult Sum(string firstNumber, string secondNumber)
         {
-            if(IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if(UtilsForNumbers.IsNumeric(firstNumber) && UtilsForNumbers.IsNumeric(secondNumber))
             {
                 var result = Convert.ToDecimal(firstNumber) + Convert.ToDecimal(secondNumber);
                 return Ok(result);
@@ -26,7 +27,7 @@ namespace RestWithAspNetCore.Controllers
         [HttpGet("subtraction/{firstNumber}/{secondNumber}")]
         public IActionResult Subtraction(string firstNumber, string secondNumber)
         {
-            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if (UtilsForNumbers.IsNumeric(firstNumber) && UtilsForNumbers.IsNumeric(secondNumber))
             {
                 var result = Convert.ToDecimal(firstNumber) - Convert.ToDecimal(secondNumber);
                 return Ok(result);
@@ -34,13 +35,52 @@ namespace RestWithAspNetCore.Controllers
             return BadRequest("Invalid input");
         }
 
-        private bool IsNumeric(string strNumber)
+        //GET api/calculator/sum/firstNumber/secondNumber
+        [HttpGet("division/{firstNumber}/{secondNumber}")]
+        public IActionResult Division(string firstNumber, string secondNumber)
         {
-            double number;
-            bool isNumber = double.TryParse(strNumber, System.Globalization.NumberStyles.Any
-                                                                                , System.Globalization.NumberFormatInfo.InvariantInfo
-                                                                                , out number);
-            return isNumber;
+            if (UtilsForNumbers.IsNumeric(firstNumber) && UtilsForNumbers.IsNumeric(secondNumber))
+            {
+                var result = Convert.ToDecimal(firstNumber) / Convert.ToDecimal(secondNumber);
+                return Ok(result);
+            }
+            return BadRequest("Invalid input");
+        }
+
+        //GET api/calculator/sum/firstNumber/secondNumber
+        [HttpGet("multiplication/{firstNumber}/{secondNumber}")]
+        public IActionResult Multiplication(string firstNumber, string secondNumber)
+        {
+            if (UtilsForNumbers.IsNumeric(firstNumber) && UtilsForNumbers.IsNumeric(secondNumber))
+            {
+                var result = Convert.ToDecimal(firstNumber) * Convert.ToDecimal(secondNumber);
+                return Ok(result);
+            }
+            return BadRequest("Invalid input");
+        }
+
+        //GET api/calculator/sum/firstNumber/secondNumber
+        [HttpGet("mean/{firstNumber}/{secondNumber}")]
+        public IActionResult Mean(string firstNumber, string secondNumber)
+        {
+            if (UtilsForNumbers.IsNumeric(firstNumber) && UtilsForNumbers.IsNumeric(secondNumber))
+            {
+                var result = (Convert.ToDecimal(firstNumber) + Convert.ToDecimal(secondNumber)) / 2;
+                return Ok(result);
+            }
+            return BadRequest("Invalid input");
+        }
+
+        //GET api/calculator/sum/firstNumber/secondNumber
+        [HttpGet("square-root/{firstNumber}")]
+        public IActionResult SquareRoot(string firstNumber)
+        {
+            if (UtilsForNumbers.IsNumeric(firstNumber))
+            {
+                var result = Math.Sqrt((double)Convert.ToDecimal(firstNumber));
+                return Ok(result);
+            }
+            return BadRequest("Invalid input");
         }
     }
 }
